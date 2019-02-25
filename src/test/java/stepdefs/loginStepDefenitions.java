@@ -8,9 +8,14 @@ import cucumber.api.java.en.When;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.lang.Exception;
@@ -23,26 +28,44 @@ public class loginStepDefenitions {
 
     WebDriver driver; // Created a variable called driver
 
-    @Before ("@full_coverage")
+    @Before ("@chrome")
 
     public void setupChromeDriver() throws Exception {
-        System.setProperty("webdriver.chrome.driver", "/Users/natalialyaskina/Downloads/chromedriver");
+
+        //set WedDriverManager to download required ChromeDriver binary (.exe) file
+
+        WebDriverManager.chromedriver().setup();
         this.driver = new ChromeDriver();
         this.driver.manage().window().maximize();
         this.driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
         System.out.println("Chrome browser was opened");
     }
 
-    @Before ("@positive")
+    @Before ("@safari")
 
-    public void setupSafaryDriver() throws Exception {
+    public void setupSafariDriver() throws Exception {
         this.driver = new SafariDriver();
         this.driver.manage().window().maximize();
         this.driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
         System.out.println("Safari browser was opened");
     }
 
-    @After
+    @Before ("@firefox")
+
+    public void setupFirefoxDriver() throws Exception {
+
+        // Set System properties for ChromeDriver explicitly
+
+        String exePath = "scr/test/drivers/geckodriver.exe";
+        System.setProperty("webdriver.firefox.driver", exePath );
+        this.driver = new FirefoxDriver();
+        this.driver.manage().window().maximize();
+        this.driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+        System.out.println("Firefox browser was opened");
+    }
+
+
+    @After ("@chrome, @safari, @firefox")
     public void tearDown()
     {
         driver.manage().deleteAllCookies();
@@ -57,15 +80,17 @@ public class loginStepDefenitions {
     public void user_navigates_to_Udemy_website() throws Exception
     {
         driver.get("http://www.webdriveruniversity.com/");
-        Thread.sleep(1000);
+        //Thread.sleep(1000);
         System.out.println("User was re-directed to WebDriverUniversity website");
     }
 
 
     @Given("^User clicks on the Login option$")
     public void user_clicks_on_the_Login_option() throws Exception {
+
+        Thread.sleep(2000);
         driver.findElement(By.xpath("//h1[contains(text(),'LOGIN PORTAL')]")).click();
-        Thread.sleep(1000);
+        //Thread.sleep(1000);
         System.out.println("User chose login option");
     }
 
@@ -80,17 +105,34 @@ public class loginStepDefenitions {
         for (String winHandle : driver.getWindowHandles()) {
             driver.switchTo().window(winHandle);
         }
-        driver.findElement(By.xpath("//input[@placeholder='Username']")).sendKeys("webdriver");
-        System.out.println("User entered valid user name");
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, 15);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@placeholder='Username']")));
 
+
+            driver.findElement(By.xpath("//input[@placeholder='Username']")).sendKeys("webdriver");
+            System.out.println("User entered valid user name");
+        }
+        catch (Exception e) {
+            System.out.println("Element is not visible: " + e.getMessage());
+        }
 
 
     }
 
+
     @Given("^User enters a valid password$")
     public void user_enters_a_valid_password() throws Exception {
-        driver.findElement(By.xpath("//input[@id='password']")).sendKeys("webdriver123");
-        System.out.println("User entered valid password");
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, 15);
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='password']")));
+
+            driver.findElement(By.xpath("//input[@id='password']")).sendKeys("webdriver123");
+            System.out.println("User entered valid password");
+        }
+        catch (Exception e) {
+            System.out.println("Element is not visible: " + e.getMessage());
+        }
 
     }
 
@@ -121,6 +163,8 @@ public class loginStepDefenitions {
         for (String winHandle : driver.getWindowHandles()) {
             driver.switchTo().window(winHandle);
         }
+        String test = driver.findElement(By.xpath("//input[@placeholder='Username']")).getText();
+        System.out.println(test);
         driver.findElement(By.xpath("//input[@placeholder='Username']")).sendKeys(username);
         System.out.println("User entered their user name");
     }
@@ -129,6 +173,7 @@ public class loginStepDefenitions {
     public void user_enters_password(String password) throws Exception {
         driver.findElement(By.xpath("//input[@id='password']")).sendKeys(password);
         System.out.println("User entered their password");
+        Thread.sleep(3000);
 
     }
 
@@ -138,6 +183,7 @@ public class loginStepDefenitions {
         System.out.println("Login success/failure message: " + (alert).getText());
         assertEquals(message.toLowerCase().replaceAll("\\s",""), alert.getText().toString().toLowerCase().replaceAll("\\s",""));
         alert.accept();
+
 
     }
 

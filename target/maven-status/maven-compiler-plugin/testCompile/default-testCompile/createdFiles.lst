@@ -1,2 +1,5 @@
 runners/RunCucumberTest.class
 stepdefs/loginStepDefenitions.class
+stepdefs/socksStepDefenition.class
+runners/RunAmazonTask.class
+runners/RunAmazonTask$RunCucumberTest.class

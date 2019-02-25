@@ -7,7 +7,7 @@ Feature: Login into account
     Given User navigates to WebDriverUniversity website
     And User clicks on the Login option
 
-  @positive
+  @safari
   Scenario: Login into account with valid credentials
 
     Given User enters a valid username
@@ -15,7 +15,15 @@ Feature: Login into account
     When User clicks on the Login button
     Then User should be shown login success message
 
-  @full_coverage
+  @firefox
+  Scenario: Login into account with valid credentials
+
+    Given User enters a valid username
+    And User enters a valid password
+    When User clicks on the Login button
+    Then User should be shown login success message
+
+  @chrome
   Scenario Outline: Login into account with user credentials
 
     Given User enters "<username>" username
