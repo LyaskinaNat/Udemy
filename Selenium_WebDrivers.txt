@@ -1,0 +1,50 @@
+Web Drivers compatible with Selenium
+
+WebDriver is an interface. Implementations include:
+
+LOCAL
+
+Cross Platform UI browsers:
+ChromeDriver
+FirefoxDriver
+OperaChromiumDriver (a WebDriver implementation derived from ChromeDriver and adapted by Opera
+that enables programmatic automation of Chromium-based Opera products)
+
+Cross Platform Headless browsers:
+HtmlUnitDriver - cons: not good for one page apps and AJAX object pages (low support of JS)
+JBrowser  - cons: only support Oracle JDK Java 8
+PhantomJSDriver - cons: no longer supported, since March 2018,only support Oracle JDK Java 8
+Headless ChromeDriver - cons: requires Chrom installation and exe to be downloadable, needs to be updated
+Headless FirefoxDriver - similar to Headless ChromDriver
+
+
+
+iOS Platform only:
+SafariDriver
+
+Windows Platform only:
+Microsoft WebDriver - Microsoft Edge Browser (MicrosoftWebDriver.exe)
+InternetExplorerDriver
+
+
+REMOTE / LOCAL:
+
+- User of Grid
+- Requires Selenium stand-along server (Grid) to be running:
+
+RemoteWebDriver (requires to specify URL of the Grid and browser you want to use)
+
+e.g. WebDriver driver = new RemoteWebDriver(new URL Desired capabilities.firefox());
+
+
+
+EventFiringWebDriver and WebDriverEventLisner
+EventFiringWebDriver is a class and is used to wrap your webdriver around to throw events and
+WebDriverEventListner is an interface which you have to implement to catch the webdriver events
+
+
+Other tasks
+
+Navigate to a given URL using the different WebDrivers [Chrome, Firefox, Safari, IE]
+Explain the practice of storing the driver executable within project
+Explain the use of WebDriverManager
