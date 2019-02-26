@@ -31,6 +31,7 @@ Feature: Login into account
     When User clicks on the Login button
     Then User should be shown login "<message>" message
 
+
     Examples:
 
       |   username     |   password     |   message             |

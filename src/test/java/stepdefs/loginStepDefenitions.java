@@ -9,14 +9,11 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.lang.Exception;
 
@@ -77,21 +74,32 @@ public class loginStepDefenitions {
 
 
     @Given("^User navigates to WebDriverUniversity website$")
-    public void user_navigates_to_Udemy_website() throws Exception
+    public void user_navigates_to_Udemy_website()
     {
-        driver.get("http://www.webdriveruniversity.com/");
-        //Thread.sleep(1000);
-        System.out.println("User was re-directed to WebDriverUniversity website");
+
+        try {
+            driver.get("http://www.webdriveruniversity.com/");
+
+        }
+
+        catch (Exception e) {
+            System.out.println("Unable to access WebDriverUniversity Website: " + e.getMessage());
+        }
     }
 
 
     @Given("^User clicks on the Login option$")
-    public void user_clicks_on_the_Login_option() throws Exception {
+    public void user_clicks_on_the_Login_option() {
 
-        Thread.sleep(2000);
+        try {
+            Thread.sleep(2000);
+
         driver.findElement(By.xpath("//h1[contains(text(),'LOGIN PORTAL')]")).click();
-        //Thread.sleep(1000);
-        System.out.println("User chose login option");
+
+        }
+        catch (Exception e) {
+            System.out.println("Unable to click on login option: " + e.getMessage());
+        }
     }
 
     @Given("^User enters a valid username$")
@@ -122,7 +130,7 @@ public class loginStepDefenitions {
 
 
     @Given("^User enters a valid password$")
-    public void user_enters_a_valid_password() throws Exception {
+    public void user_enters_a_valid_password() {
         try {
             WebDriverWait wait = new WebDriverWait(driver, 15);
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='password']")));
@@ -137,55 +145,87 @@ public class loginStepDefenitions {
     }
 
     @When("^User clicks on the Login button$")
-    public void user_clicks_on_the_Login_button() throws Exception {
-        driver.findElement(By.xpath("//button[@id='login-button']")).click();
-        System.out.println("User clicked on the login button");
-        Thread.sleep(1000);
+    public void user_clicks_on_the_Login_button() {
+        try {
+
+
+            driver.findElement(By.xpath("//button[@id='login-button']")).click();
+            System.out.println("User clicked on the login button");
+            Thread.sleep(1000);
+        }
+        catch (Exception e) {
+            System.out.println("Unable to click on login button: " + e.getMessage());
+        }
     }
 
     @Then("^User should be shown login success message$")
-    public void user_should_be_taken_to_the_success_login_page() throws Exception {
-        Alert alert = driver.switchTo().alert();
-        System.out.println("Login success/failure message: " + (alert).getText());
-        assertEquals("validationsucceeded", alert.getText().toString().toLowerCase().replaceAll("\\s",""));
-        alert.accept();
+    public void user_should_be_taken_to_the_success_login_page() {
+        try {
+
+
+            Alert alert = driver.switchTo().alert();
+            System.out.println("Login success/failure message: " + (alert).getText());
+            assertEquals("validationsucceeded", alert.getText().toString().toLowerCase().replaceAll("\\s", ""));
+            alert.accept();
+        }
+        catch (Exception e) {
+            System.out.println("Assertion action failed: " + e.getMessage());
+        }
     }
 
 
     @Given("^User enters \"([^\"]*)\" username$")
-    public void user_enters_username(String username) throws Exception {
-        //store the current window handle
-        @SuppressWarnings("unused")
-        String winHandleBefore = driver.getWindowHandle();
-        //Perform the click operation that opens new window
-        //Switch to new window opened
+    public void user_enters_username(String username) {
+        try {
 
-        for (String winHandle : driver.getWindowHandles()) {
-            driver.switchTo().window(winHandle);
+            //store the current window handle
+            @SuppressWarnings("unused")
+            String winHandleBefore = driver.getWindowHandle();
+            //Perform the click operation that opens new window
+            //Switch to new window opened
+
+            for (String winHandle : driver.getWindowHandles()) {
+                driver.switchTo().window(winHandle);
+            }
+
+            driver.findElement(By.xpath("//input[@placeholder='Username']")).sendKeys(username);
+            System.out.println("User entered their user name");
+        } catch (Exception e) {
+            System.out.println("Unable to enter username: " + e.getMessage());
         }
-        String test = driver.findElement(By.xpath("//input[@placeholder='Username']")).getText();
-        System.out.println(test);
-        driver.findElement(By.xpath("//input[@placeholder='Username']")).sendKeys(username);
-        System.out.println("User entered their user name");
     }
 
     @Given("^User enters \"([^\"]*)\" password$")
-    public void user_enters_password(String password) throws Exception {
-        driver.findElement(By.xpath("//input[@id='password']")).sendKeys(password);
-        System.out.println("User entered their password");
-        Thread.sleep(3000);
+    public void user_enters_password(String password) {
+            try {
+
+                driver.findElement(By.xpath("//input[@id='password']")).sendKeys(password);
+                System.out.println("User entered their password");
+                Thread.sleep(1000);
+            }
+            catch (Exception e) {
+                System.out.println("Unable to enter password: " + e.getMessage());
+            }
 
     }
 
     @Then("^User should be shown login \"([^\"]*)\" message$")
-    public void user_should_be_shown_login_message(String message) throws WebDriverException {
-        Alert alert = driver.switchTo().alert();
-        System.out.println("Login success/failure message: " + (alert).getText());
-        assertEquals(message.toLowerCase().replaceAll("\\s",""), alert.getText().toString().toLowerCase().replaceAll("\\s",""));
-        alert.accept();
+    public void user_should_be_shown_login_message(String message) {
+            try {
+
+                Alert alert = driver.switchTo().alert();
+                System.out.println("Login success/failure message: " + (alert).getText());
+                assertEquals(message.toLowerCase().replaceAll("\\s", ""), alert.getText().toString().toLowerCase().replaceAll("\\s", ""));
+                alert.accept();
+            }
+            catch (Exception e) {
+                System.out.println("Assertion action failed: " + e.getMessage());
+            }
 
 
     }
+
+
 
 }
 

@@ -11,3 +11,5 @@ Feature: Search navigation
     And User presses Search button gets redirected to the page containing list of links to different types if socks
     When User clicks on the first link from the list
     Then User should be redirected to the corresponding to the chosen type of socks page
+    And User navigates back to the home page
+    And User scrolls up and down Amazon home page

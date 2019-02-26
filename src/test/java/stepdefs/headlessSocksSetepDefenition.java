@@ -5,43 +5,42 @@ import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 import org.openqa.selenium.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.concurrent.TimeUnit;
 import java.lang.Exception;
 import static org.junit.Assert.assertEquals;
 
-public class socksStepDefenition
-{
+public class headlessSocksSetepDefenition {
 
-    WebDriver driver; // Created a variable called driver
+    static protected WebDriver driver; // Created a variable called driver
     String link;
     String socks;
 
 
-    @Before ("@amazon")
+    @Before ("@headless")
 
-    public void setupChromeDriver() {
+    public static void setupHeadlessChromeDriver() {
 
-        try {
+        //Static protected WebDriver driver
 
-            //set WedDriverManager to download required ChromeDriver binary (.exe) file
 
-            WebDriverManager.chromedriver().setup();
-            this.driver = new ChromeDriver();
-            this.driver.manage().window().maximize();
-            this.driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
-            System.out.println("Chrome browser was opened");
-        }
-        catch (Exception e) {
-            System.out.println("Unable to open Chrome browser: " + e.getMessage());
-        }
+            ChromeDriverManager.chromedriver().setup();
+            ChromeOptions chromeOptions = new ChromeOptions();
+
+            chromeOptions.addArguments("--headless");
+            driver = new ChromeDriver(chromeOptions);
+
+            System.out.println("Headless Chrome browser was opened");
+
     }
 
-    @After ("@amazon")
+    @After ("@headless")
 
     public void tearDown()
     {
@@ -52,11 +51,12 @@ public class socksStepDefenition
 
     }
 
-    @Given("User navigates to Amazon website")
+    @Given("User navigates to Amazon website >")
     public void user_navigates_to_Amazon_website() {
         try {
 
             driver.get("http://www.amazon.co.uk/");
+            System.out.println("Chrome navigated to Amazon");
         }
         catch (Exception e) {
             System.out.println("Unable to access Amazon.co.uk Website: " + e.getMessage());
@@ -64,25 +64,28 @@ public class socksStepDefenition
 
     }
 
-    @Given("User types socks into the search section")
+    @Given("User types socks into the search section >")
     public void user_types_socks_into_the_search_section() {
         try {
             WebDriverWait wait = new WebDriverWait(driver,10);
             WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='twotabsearchtextbox']")));
             element.sendKeys("socks");
+            System.out.println("Chrome searched for socks");
 
         }
         catch (Exception e) {
-            System.out.println("Unable to access Amazon.co.uk Website: " + e.getMessage());
+            System.out.println("Unable to find search text box: " + e.getMessage());
         }
 
     }
 
 
-    @Given("User presses Search button gets redirected to the page containing list of links to different types if socks")
+    @Given("User presses Search button gets redirected to the page containing list of links to different types if socks >")
     public void user_presses_Search_button() {
         try {
             driver.findElement(By.xpath("//input[@value='Go']")).click();
+            System.out.println("Chrome clicked on search button");
+
         }
         catch (Exception e) {
             System.out.println("Unable to submit the search: " + e.getMessage());
@@ -92,7 +95,7 @@ public class socksStepDefenition
     }
 
 
-    @When("User clicks on the first link from the list")
+    @When("User clicks on the first link from the list >")
     public void user_clicks_on_the_first_item_from_the_list() {
         try
         {
@@ -100,6 +103,7 @@ public class socksStepDefenition
             WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[1]/div[1]/div[1]/div[1]/div[2]/div[2]/div[1]/a[1]/h2[1]")));
             link = driver.findElement(By.xpath("//li[1]/div[1]/div[1]/div[1]/div[2]/div[2]/div[1]/a[1]/h2[1]")).getText();
             element.click();
+            System.out.println("Chrome clicked on first item from the list");
 
         }
         catch (Exception e) {
@@ -108,7 +112,7 @@ public class socksStepDefenition
 
     }
 
-    @Then("User should be redirected to the corresponding to the chosen type of socks page")
+    @Then("User should be redirected to the corresponding to the chosen type of socks page >")
     public void user_should_be_redirected_to_the_corresponding_to_the_chosen_type_of_socks_page()
     {
 
@@ -117,33 +121,9 @@ public class socksStepDefenition
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("productTitle")));
             socks = driver.findElement(By.id("productTitle")).getText();
             assertEquals(link, socks);
-        }
-        catch (Exception e) {
-                System.out.println("Unable to access first link on the page: " + e.getMessage());
-            }
-
-    }
-
-    @Then("User navigates back to the home page")
-    public void user_navigates_back_to_the_home_page() {
-        try {
-            driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
-            driver.navigate().back();
-            Thread.sleep(1500);
-        }
-        catch (Exception e) {
-            System.out.println("Unable to access first link on the page: " + e.getMessage());
-        }
-    }
-
-    @Then("User scrolls up and down Amazon home page")
-    public void user_scrolls_up_and_down_Amazon_home_page() {
-        try {
-            driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
-            JavascriptExecutor js = (JavascriptExecutor) driver;
-            js.executeScript("window.scrollBy(0,5000)");
-            Thread.sleep(1500);
-
+            System.out.println("Assertion was performed");
+            System.out.println(link);
+            System.out.println(socks);
         }
         catch (Exception e) {
             System.out.println("Unable to access first link on the page: " + e.getMessage());
