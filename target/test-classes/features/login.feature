@@ -8,7 +8,7 @@ Feature: Login into account
     And User clicks on the Login option
 
   @safari
-  Scenario: Login into account with valid credentials
+  Scenario: Login into account with valid credentials - Safari
 
     Given User enters a valid username
     And User enters a valid password
@@ -16,7 +16,7 @@ Feature: Login into account
     Then User should be shown login success message
 
   @firefox
-  Scenario: Login into account with valid credentials
+  Scenario: Login into account with valid credentials - Firefox
 
     Given User enters a valid username
     And User enters a valid password
@@ -24,7 +24,7 @@ Feature: Login into account
     Then User should be shown login success message
 
   @chrome
-  Scenario Outline: Login into account with user credentials
+  Scenario Outline: Login into account with user credentials - Chrome
 
     Given User enters "<username>" username
     And User enters "<password>" password

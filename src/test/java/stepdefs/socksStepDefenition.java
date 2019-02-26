@@ -10,6 +10,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.IOException;
+import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import java.lang.Exception;
 import static org.junit.Assert.assertEquals;
@@ -41,6 +44,7 @@ public class socksStepDefenition
         }
     }
 
+
     @After ("@amazon")
 
     public void tearDown()
@@ -53,34 +57,27 @@ public class socksStepDefenition
     }
 
     @Given("User navigates to Amazon website")
-    public void user_navigates_to_Amazon_website() {
-        try {
+    public void user_navigates_to_Amazon_website() throws Exception{
+
 
             driver.get("http://www.amazon.co.uk/");
-        }
-        catch (Exception e) {
-            System.out.println("Unable to access Amazon.co.uk Website: " + e.getMessage());
-        }
+
 
     }
 
     @Given("User types socks into the search section")
-    public void user_types_socks_into_the_search_section() {
-        try {
+    public void user_types_socks_into_the_search_section() throws NoSuchElementException {
+
             WebDriverWait wait = new WebDriverWait(driver,10);
             WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@id='twotabsearchtextbox']")));
             element.sendKeys("socks");
 
-        }
-        catch (Exception e) {
-            System.out.println("Unable to access Amazon.co.uk Website: " + e.getMessage());
-        }
 
     }
 
 
     @Given("User presses Search button gets redirected to the page containing list of links to different types if socks")
-    public void user_presses_Search_button() {
+    public void user_presses_Search_button() throws NoSuchElementException {
         try {
             driver.findElement(By.xpath("//input[@value='Go']")).click();
         }
@@ -93,61 +90,43 @@ public class socksStepDefenition
 
 
     @When("User clicks on the first link from the list")
-    public void user_clicks_on_the_first_item_from_the_list() {
-        try
-        {
+    public void user_clicks_on_the_first_item_from_the_list() throws NoSuchElementException {
+
             WebDriverWait wait = new WebDriverWait(driver,10);
             WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//li[1]/div[1]/div[1]/div[1]/div[2]/div[2]/div[1]/a[1]/h2[1]")));
             link = driver.findElement(By.xpath("//li[1]/div[1]/div[1]/div[1]/div[2]/div[2]/div[1]/a[1]/h2[1]")).getText();
             element.click();
 
-        }
-        catch (Exception e) {
-            System.out.println("Unable to access first link on the page: " + e.getMessage());
-        }
-
     }
 
     @Then("User should be redirected to the corresponding to the chosen type of socks page")
-    public void user_should_be_redirected_to_the_corresponding_to_the_chosen_type_of_socks_page()
-    {
+    public void user_should_be_redirected_to_the_corresponding_to_the_chosen_type_of_socks_page() throws NoSuchElementException {
 
-        try {
+
             WebDriverWait wait = new WebDriverWait(driver, 10);
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("productTitle")));
             socks = driver.findElement(By.id("productTitle")).getText();
             assertEquals(link, socks);
-        }
-        catch (Exception e) {
-                System.out.println("Unable to access first link on the page: " + e.getMessage());
-            }
 
     }
 
     @Then("User navigates back to the home page")
-    public void user_navigates_back_to_the_home_page() {
-        try {
+    public void user_navigates_back_to_the_home_page() throws Exception {
+
             driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
             driver.navigate().back();
             Thread.sleep(1500);
-        }
-        catch (Exception e) {
-            System.out.println("Unable to access first link on the page: " + e.getMessage());
-        }
+
     }
 
     @Then("User scrolls up and down Amazon home page")
-    public void user_scrolls_up_and_down_Amazon_home_page() {
-        try {
+    public void user_scrolls_up_and_down_Amazon_home_page() throws Exception {
+
             driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
             JavascriptExecutor js = (JavascriptExecutor) driver;
             js.executeScript("window.scrollBy(0,5000)");
             Thread.sleep(1500);
 
-        }
-        catch (Exception e) {
-            System.out.println("Unable to access first link on the page: " + e.getMessage());
-        }
 
     }
 

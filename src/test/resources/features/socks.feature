@@ -5,7 +5,7 @@ Feature: Search navigation
 | I want the system to redirect me to the socks page which matches my search criteria
 
 
-  Scenario: Search for a specific type of socks and being redirected to the matching socks page
+  Scenario: Search for a specific type of socks and being redirected to the matching socks page - Chrome
     Given User navigates to Amazon website
     And User types socks into the search section
     And User presses Search button gets redirected to the page containing list of links to different types if socks
