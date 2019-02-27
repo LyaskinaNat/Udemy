@@ -37,14 +37,3 @@ RemoteWebDriver (requires to specify URL of the Grid and browser you want to use
 e.g. WebDriver driver = new RemoteWebDriver(new URL Desired capabilities.firefox());
 
 
-
-EventFiringWebDriver and WebDriverEventLisner
-EventFiringWebDriver is a class and is used to wrap your webdriver around to throw events and
-WebDriverEventListner is an interface which you have to implement to catch the webdriver events
-
-
-Other tasks
-
-Navigate to a given URL using the different WebDrivers [Chrome, Firefox, Safari, IE]
-Explain the practice of storing the driver executable within project
-Explain the use of WebDriverManager

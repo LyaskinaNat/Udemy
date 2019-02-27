@@ -7,7 +7,7 @@ Feature: Login into account
     Given User navigates to WebDriverUniversity website
     And User clicks on the Login option
 
-  @safari
+  @safari_br
   Scenario: Login into account with valid credentials - Safari
 
     Given User enters a valid username
@@ -15,7 +15,7 @@ Feature: Login into account
     When User clicks on the Login button
     Then User should be shown login success message
 
-  @firefox
+  @firefox_br
   Scenario: Login into account with valid credentials - Firefox
 
     Given User enters a valid username
@@ -23,7 +23,7 @@ Feature: Login into account
     When User clicks on the Login button
     Then User should be shown login success message
 
-  @chrome
+  @chrome_br
   Scenario Outline: Login into account with user credentials - Chrome
 
     Given User enters "<username>" username

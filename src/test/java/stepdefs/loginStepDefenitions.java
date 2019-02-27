@@ -22,7 +22,7 @@ public class loginStepDefenitions {
 
     WebDriver driver; // Created a variable called driver
 
-    @Before ("@chrome")
+    @Before ("@chrome_br")
 
     public void setupChromeDriver() throws Exception {
 
@@ -35,7 +35,7 @@ public class loginStepDefenitions {
         System.out.println("Chrome browser was opened");
     }
 
-    @Before ("@safari")
+    @Before ("@safari_br")
 
     public void setupSafariDriver() throws Exception {
         this.driver = new SafariDriver();
@@ -44,7 +44,7 @@ public class loginStepDefenitions {
         System.out.println("Safari browser was opened");
     }
 
-    @Before ("@firefox")
+    @Before ("@firefox_br")
 
     public void setupFirefoxDriver() throws Exception {
 
@@ -59,7 +59,7 @@ public class loginStepDefenitions {
     }
 
 
-    @After ("@chrome, @safari, @firefox")
+    @After ("@chrome_br, @safari_br, @firefox_br")
     public void tearDown()
     {
         driver.manage().deleteAllCookies();
