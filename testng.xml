@@ -2,4 +2,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="All Test Suite">
     <test verbose="2" preserve-order="true" name="/Users/natalialyaskina/IdeaProjects/maven-cucumber-java-template">
-        <classes/></test></suite>
+        <classes/>
+    </test>
+</suite>

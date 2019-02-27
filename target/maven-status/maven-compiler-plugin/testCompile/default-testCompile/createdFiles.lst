@@ -1,5 +1,4 @@
 runners/RunCucumberTest.class
 stepdefs/loginStepDefenitions.class
 stepdefs/socksStepDefenition.class
-stepdefs/headlessSocksSetepDefenition.class
 runners/RunAmasonTest.class

@@ -1,5 +1,4 @@
-/Users/natalialyaskina/IdeaProjects/maven-cucumber-java-template/src/test/java/stepdefs/socksStepDefenition.java
-/Users/natalialyaskina/IdeaProjects/maven-cucumber-java-template/src/test/java/stepdefs/loginStepDefenitions.java
-/Users/natalialyaskina/IdeaProjects/maven-cucumber-java-template/src/test/java/stepdefs/headlessSocksSetepDefenition.java
-/Users/natalialyaskina/IdeaProjects/maven-cucumber-java-template/src/test/java/runners/RunCucumberTest.java
-/Users/natalialyaskina/IdeaProjects/maven-cucumber-java-template/src/test/java/runners/RunAmasonTest.java
+/Users/natalialyaskina/IdeaProjects/CucumberFramework/src/test/java/stepdefs/socksStepDefenition.java
+/Users/natalialyaskina/IdeaProjects/CucumberFramework/src/test/java/stepdefs/loginStepDefenitions.java
+/Users/natalialyaskina/IdeaProjects/CucumberFramework/src/test/java/runners/RunCucumberTest.java
+/Users/natalialyaskina/IdeaProjects/CucumberFramework/src/test/java/runners/RunAmasonTest.java
